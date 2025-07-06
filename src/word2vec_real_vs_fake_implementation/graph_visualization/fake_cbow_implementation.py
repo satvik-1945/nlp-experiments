@@ -3,7 +3,6 @@ from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 import os
 
-# Optional if you want PCA instead of t-SNE
 from sklearn.decomposition import PCA
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -33,7 +32,7 @@ def plot_embeddings_2d(embeddings, idx2word, highlight_groups=None, method="tsne
         if highlight_groups:
             for group_name, word_list in highlight_groups.items():
                 if word in word_list:
-                    color = highlight_groups[group_name][0]  # group color
+                    color = highlight_groups[group_name][0]  
         plt.scatter(x, y, c=color)
         plt.text(x + 0.01, y + 0.01, word, fontsize=9)
 

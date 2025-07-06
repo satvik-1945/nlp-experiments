@@ -40,26 +40,14 @@ def generate_cbow_training_data(tokenized_sentences, word2idx, window_size=2):
             target_word_idx = word2idx[sentence[idx]]
             current_context = []
 
-            # Collect words from the left context
             for i in range(1, window_size + 1):
                 left_idx = idx - i
                 if left_idx >= 0:
                     current_context.append(word2idx[sentence[left_idx]])
-                # else:  # If you wanted to pad with a special token for missing context
-                #     current_context.append(word2idx['<PAD>']) # Requires '<PAD>' in vocab
-
-            # Collect words from the right context
             for i in range(1, window_size + 1):
                 right_idx = idx + i
                 if right_idx < len(sentence):
                     current_context.append(word2idx[sentence[right_idx]])
-                # else: # If you wanted to pad with a special token for missing context
-                #     current_context.append(word2idx['<PAD>']) # Requires '<PAD>' in vocab
-
-            # For CBOW, the order of context words generally doesn't matter for the bag-of-words input.
-            # However, ensure we have exactly fixed_context_size words.
-            # If not enough context words are available (e.g., at sentence start/end),
-            # we skip this target word for training, ensuring constant context size.
             if len(current_context) == fixed_context_size:
                 training_data.append((current_context, target_word_idx))
     return training_data
@@ -68,7 +56,7 @@ train_data = generate_cbow_training_data(tokenized_sentences, word2idx)
 print(f'training data sample: {train_data[:5]}')
 # exit()
 
-context_size = 4  # window size of 2 on both sides → total 4 context words
+context_size = 4  
 print(len(vocab)*context_size)
 embed_dim = 10
 
@@ -77,7 +65,6 @@ print("starting training...")
 model.train(train_data, epochs=1000)
 print("training complete. saving model...")
 # print(os.getcwd())
-# Save embedding matrix and vocab maps
 scriptdir = os.path.dirname(os.path.abspath(__file__))
 output_file_path = os.path.join(scriptdir,"saved_embedding_models/cbow_embeddings.pkl")
 

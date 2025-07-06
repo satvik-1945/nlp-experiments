@@ -38,11 +38,9 @@ class OneHotCBOW:
             for context_idxs, target_idx in train_data:
                 x, h, u, y_pred = self.forward(context_idxs)
 
-                # Cross-entropy loss
                 loss = -np.log(y_pred[target_idx] + 1e-9)
                 total_loss += loss
 
-                # Gradients
                 delta = y_pred.copy()
                 delta[target_idx] -= 1
 
@@ -57,4 +55,4 @@ class OneHotCBOW:
                 print(f"Epoch {epoch} | Loss: {avg_loss:.4f}")
 
     def get_embedding_matrix(self):
-        return self.W2.T  # Each row: vector for one word
+        return self.W2.T  
