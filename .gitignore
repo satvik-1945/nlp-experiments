@@ -1,2 +1,3 @@
 src/word2vec_real_vs_fake_implementation/cbow_models/__pycache__/EmbeddingCBOW.cpython-311.pyc
 src/word2vec_real_vs_fake_implementation/cbow_models/__pycache__/OneHotCBOW.cpython-311.pyc
+nltk_data/
