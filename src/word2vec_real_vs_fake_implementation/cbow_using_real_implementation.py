@@ -1,15 +1,18 @@
 from cbow_models.EmbeddingCBOW import EmbeddingCBOW
 import pickle
 import os
+import re
 
-sentences = [
-    "apple banana mango pineapple",              # 🟥 fruits
-    "china india france japan germany",          # 🟦 countries
-    "jazz classical rock techno pop",            # 🟩 genres
-    "banana mango apple",                        # 🟥 fruits
-    "france india japan",                        # 🟦 countries
-    "rock jazz pop", 
-]
+# Load the 5000-word essay corpus
+scriptdir = os.path.dirname(os.path.abspath(__file__))
+corpus_path = os.path.join(scriptdir, "corpus.txt")
+with open(corpus_path, "r") as f:
+    corpus_text = f.read()
+
+# Split into sentences (by period, exclamation, question mark)
+raw_sentences = re.split(r'[.!?]+', corpus_text)
+sentences = [s.strip() for s in raw_sentences if len(s.strip()) > 0]
+print(f"Loaded corpus: {len(corpus_text.split())} words, {len(sentences)} sentences")
 
 def tokenize_sentences(sentences):
     tokens = []
